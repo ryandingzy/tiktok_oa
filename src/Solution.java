@@ -27,4 +27,23 @@ public class Solution {
         return inversions;
     }
 
+
+    // Circular Printer
+    public static long getTime(String s) {
+        char curr = 'A';
+        long res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char next = s.charAt(i);
+            int gap = Math.abs(next - curr);
+            if (gap <= 13) res += gap;
+            else res += 26 - gap;
+            curr = next;
+        }
+        return res;
+    }
+
+    public static void testGetTime() {
+        String str = "AZGB";
+        System.out.println(getTime(str));
+    }
 }
