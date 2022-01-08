@@ -7,7 +7,8 @@ public class Test {
 
 //        solution.testNames();
 //        solution.testProduct();
-        solution.testDominos();
+//        solution.testDominos();
+        solution.testProcessDates();
     }
 
 

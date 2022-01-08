@@ -215,6 +215,57 @@ public class Solution {
             System.out.println(i);
         }
     }
+
+    HashMap<String, String> months;
+
+    private String processDate(String date) {
+
+        String day = "", month, year;
+        int dayCount = 2;
+        if (!Character.isDigit(date.charAt(1))) {
+            dayCount = 1;
+            day = "0";
+        }
+        day += date.substring(0, dayCount);
+        dayCount += 3;
+        month = months.get(date.substring(dayCount, dayCount + 3));
+        year = date.substring(date.length() - 4);
+        return day + "-" + month + "-" + year;
+    }
+
+    public String[] processDates(String[] dates) {
+        months = new HashMap<>();
+        months.put("Jan", "01");
+        months.put("Feb", "02");
+        months.put("Mar", "03");
+        months.put("Apr", "04");
+        months.put("May", "05");
+        months.put("Jun", "06");
+        months.put("Jul", "07");
+        months.put("Aug", "08");
+        months.put("Sep", "09");
+        months.put("Oct", "10");
+        months.put("Nov", "11");
+        months.put("Dec", "12");
+
+        int n = dates.length;
+        String[] res = new String[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = processDate(dates[i]);
+        }
+        return res;
+    }
+
+    public void testProcessDates() {
+        String[] strs = new String[]{
+                "1st Mar 1947",
+                "22nd Jan 2013"
+        };
+        String[] res = processDates(strs);
+        for (String str : res) {
+            System.out.println(str);
+        }
+    }
 }
 
 
