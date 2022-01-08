@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class Solution {
     // Inversions
@@ -126,4 +125,60 @@ public class Solution {
 
     // 1. Roman number --> integer
     // 2. sort string
+
+
+    // shared interest
+    public int product(List<Integer> from, List<Integer> to, List<Integer> w) {
+        int n = 0;
+        for (int i = 0; i < from.size(); i++) {
+            n = Math.max(n, from.get(i));
+            n = Math.max(n, to.get(i));
+        }
+
+        HashMap<Integer, boolean[]> map = new HashMap<>();
+        // add to hashmap
+        for (int i = 0; i < w.size(); i++) {
+            int weight = w.get(i);
+            if (!map.containsKey(weight)) {
+                map.put(weight, new boolean[n]);
+            }
+            map.get(weight)[from.get(i) - 1] = true;
+            map.get(weight)[to.get(i) - 1] = true;
+        }
+
+        HashMap<String, Integer> pairs = new HashMap<>();
+        int max = 0;
+        int maxProduct = 0;
+        for (boolean[] arr : map.values()) {
+            for (int i = 0; i < n; i++) {
+                if (!arr[i])
+                    continue;
+                for (int j = i + 1; j < n; j++) {
+                    if (!arr[j])
+                        continue;
+                    String key = (i + 1) + "-" + (j + 1);
+                    pairs.put(key, pairs.getOrDefault(key, 0) + 1);
+                    if (pairs.get(key) == max) {
+                        maxProduct = Math.max(maxProduct, strToProduct(key));
+                    } else if (pairs.get(key) > max) {
+                        maxProduct = strToProduct(key);
+                        max = pairs.get(key);
+                    }
+                }
+            }
+            return maxProduct;
+        }
+    }
+
+    private int strToProduct(String str) {
+        String[] strs = str.split("-");
+        return Integer.parseInt(strs[0]) * Integer.parseInt(strs[1]);
+    }
+
+    public void testProduct() {
+        List<Integer> from = Arrays.asList(1, 1, 2, 2, 2);
+        List<Integer> to = Arrays.asList(2, 2, 3, 3, 4);
+        List<Integer> w = Arrays.asList(1, 2, 1, 3, 3);
+        System.out.println(product(from, to, w));
+    }
 }

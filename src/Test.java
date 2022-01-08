@@ -5,7 +5,8 @@ public class Test {
         Solution solution = new Solution();
 //        Solution.testGetTime();
 
-        solution.testNames();
+//        solution.testNames();
+        solution.testProduct();
     }
 
 
