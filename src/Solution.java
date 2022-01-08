@@ -166,8 +166,8 @@ public class Solution {
                     }
                 }
             }
-            return maxProduct;
         }
+        return maxProduct;
     }
 
     private int strToProduct(String str) {
@@ -181,4 +181,40 @@ public class Solution {
         List<Integer> w = Arrays.asList(1, 2, 1, 3, 3);
         System.out.println(product(from, to, w));
     }
+
+
+    // dominos tiling
+    HashMap<Integer, Integer> ways;
+    private int getWays(int n) {
+        if (!ways.containsKey(n)) {
+            int res = (int)((2 * (long)getWays(n - 1) + 9 * (long)getWays(n - 2)) % 1000000007);
+            ways.put(n, res);
+            return res;
+        }
+        return ways.get(n);
+    }
+
+    public List<Integer> dominos(List<Integer> nvalues) {
+        ways = new HashMap<Integer, Integer>();
+        ways.put(1, 2);
+        ways.put(2, 9);
+
+        List<Integer> res = new ArrayList<>();
+
+        for (int nvalue : nvalues) {
+            res.add(getWays(nvalue));
+        }
+
+        return res;
+    }
+
+    public void testDominos() {
+        List<Integer> lst = Arrays.asList(2, 5, 59, 200, 3400, 10000);
+        List<Integer> res = dominos(lst);
+        for (int i : res) {
+            System.out.println(i);
+        }
+    }
 }
+
+

@@ -6,7 +6,8 @@ public class Test {
 //        Solution.testGetTime();
 
 //        solution.testNames();
-        solution.testProduct();
+//        solution.testProduct();
+        solution.testDominos();
     }
 
 
