@@ -266,6 +266,9 @@ public class Solution {
             System.out.println(str);
         }
     }
+
+    // starts and bars
+
 }
 
 
