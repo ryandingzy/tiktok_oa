@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Solution {
+public class Solution22 {
     // Inversions
     private static long countInversions(int[] a) {
         int n = a.length;
