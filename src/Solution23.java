@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,32 @@ public class Solution23 {
             record.put(modulus, same + 1);
         }
         return ans;
+    }
+
+    // 返回最短的subarray
+    public int[] minSubArraysDivByK(int[] nums, int k) {
+        Map<Integer, Integer> record = new HashMap<>();
+        int curLen = Integer.MAX_VALUE;
+        int[] res = new int[0];
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int r = (nums[i] % k + k) % k;
+            if (r == 0) {
+                return new int[]{nums[i]};
+            }
+            sum += nums[i];
+            r = (sum % k + k) % k;
+            if (r == 0 && curLen > i + 1) {
+                curLen = i + 1;
+                res = Arrays.copyOfRange(nums, 0, i + 1);
+            }
+            if (record.containsKey(r) && curLen > i - record.get(r)) {
+                curLen = i - record.get(r);
+                res = Arrays.copyOfRange(nums, record.get(r) + 1, i + 1);
+            }
+            record.put(r, i);
+        }
+        return res;
     }
 
 }
