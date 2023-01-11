@@ -45,4 +45,28 @@ public class Solution23 {
         return res;
     }
 
+    // Divide an array into subarrays with sum no greater than M
+    public int minSum(int[] nums, int M) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            int l = i;
+            int sum = nums[i];
+            int max = nums[i];
+            dp[i] = dp[i-1] + max;
+            while (l - 1 >= 0 && nums[l-1] + sum <= M) {
+                l--;
+                sum += nums[l];
+                max = Math.max(max, nums[l]);
+                if (l == 0) {
+                    dp[i] = Math.min(dp[i], max);
+                } else {
+                    dp[i] = Math.min(dp[i], dp[l-1] + max);
+                }
+            }
+        }
+        return dp[n-1];
+    }
+
 }
