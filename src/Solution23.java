@@ -1,6 +1,5 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Solution23 {
     // 子序列之和整除，HashMap
@@ -69,4 +68,65 @@ public class Solution23 {
         return dp[n-1];
     }
 
+    // merge intervals
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        LinkedList<int[]> merged = new LinkedList<>();
+        for (int[] interval : intervals) {
+            if (merged.isEmpty() || merged.getLast()[1] < interval[0]) {
+                merged.add(interval);
+            } else {
+                merged.getLast()[1] = Math.max(merged.getLast()[1], interval[1]);
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
+    }
+
+    // Tom and Jerry
+    public int[] tomNJerry(int[][] catSessions, int[][] mouseSessions) {
+        // select
+        int mouseMin = Integer.MAX_VALUE;
+        int mouseMax = Integer.MIN_VALUE;
+        for (int[] mouse: mouseSessions) {
+            mouseMin = Math.min(mouseMin, mouse[0]);
+            mouseMax = Math.max(mouseMax, mouse[1]);
+        }
+        List<int[]> cat = new ArrayList<>();
+        int catMin = Integer.MAX_VALUE;
+        int catMax = Integer.MIN_VALUE;
+        for (int[] c : catSessions) {
+            if (c[0] < mouseMax && c[1] > mouseMin) {
+                cat.add(c);
+                catMin = Math.min(catMin, c[0]);
+                catMax = Math.max(catMax, c[1]);
+            }
+        }
+
+        List<int[]> mouse = new ArrayList<>();
+        for (int[] m : mouseSessions) {
+            if (m[0] < catMax && m[1] > catMin) {
+                mouse.add(m);
+            }
+        }
+
+        // sort
+        Collections.sort(cat, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] == o2[0]) return o1[1] - o2[1];
+                return o1[0] - o2[0];
+            }
+        });
+
+        Collections.sort(mouse, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] == o2[0]) return o1[1] - o2[1];
+                return o1[0] - o2[0];
+            }
+        });
+
+        // binary Search
+
+    }
 }
