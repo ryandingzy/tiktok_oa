@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Solution23 {
@@ -83,50 +82,75 @@ public class Solution23 {
     }
 
     // Tom and Jerry
-    public int[] tomNJerry(int[][] catSessions, int[][] mouseSessions) {
-        // select
-        int mouseMin = Integer.MAX_VALUE;
-        int mouseMax = Integer.MIN_VALUE;
-        for (int[] mouse: mouseSessions) {
-            mouseMin = Math.min(mouseMin, mouse[0]);
-            mouseMax = Math.max(mouseMax, mouse[1]);
+//    public int[] tomNJerry(int[][] catSessions, int[][] mouseSessions) {
+//        // select
+//        int mouseMin = Integer.MAX_VALUE;
+//        int mouseMax = Integer.MIN_VALUE;
+//        for (int[] mouse: mouseSessions) {
+//            mouseMin = Math.min(mouseMin, mouse[0]);
+//            mouseMax = Math.max(mouseMax, mouse[1]);
+//        }
+//        List<int[]> cat = new ArrayList<>();
+//        int catMin = Integer.MAX_VALUE;
+//        int catMax = Integer.MIN_VALUE;
+//        for (int[] c : catSessions) {
+//            if (c[0] < mouseMax && c[1] > mouseMin) {
+//                cat.add(c);
+//                catMin = Math.min(catMin, c[0]);
+//                catMax = Math.max(catMax, c[1]);
+//            }
+//        }
+//
+//        List<int[]> mouse = new ArrayList<>();
+//        for (int[] m : mouseSessions) {
+//            if (m[0] < catMax && m[1] > catMin) {
+//                mouse.add(m);
+//            }
+//        }
+//
+//        // sort
+//        Collections.sort(cat, new Comparator<int[]>() {
+//            @Override
+//            public int compare(int[] o1, int[] o2) {
+//                if (o1[0] == o2[0]) return o1[1] - o2[1];
+//                return o1[0] - o2[0];
+//            }
+//        });
+//
+//        Collections.sort(mouse, new Comparator<int[]>() {
+//            @Override
+//            public int compare(int[] o1, int[] o2) {
+//                if (o1[0] == o2[0]) return o1[1] - o2[1];
+//                return o1[0] - o2[0];
+//            }
+//        });
+//
+//    }
+
+    // Junie's Birthday
+
+    private static int getNumOfSubarray(List<Integer> nums, int start, int end, int d) {
+        Map<Integer, Integer> pMap = new HashMap<>();
+        pMap.put(0, 1);
+        int res = 0;
+        int sum = 0;
+        for (int i = start; i <= end; i++) {
+            sum += nums.get(i);
+            int rem = (sum % d + d) % d;
+            int count = pMap.getOrDefault(rem, 0);
+            res += count;
+            pMap.put(rem, count + 1);
         }
-        List<int[]> cat = new ArrayList<>();
-        int catMin = Integer.MAX_VALUE;
-        int catMax = Integer.MIN_VALUE;
-        for (int[] c : catSessions) {
-            if (c[0] < mouseMax && c[1] > mouseMin) {
-                cat.add(c);
-                catMin = Math.min(catMin, c[0]);
-                catMax = Math.max(catMax, c[1]);
-            }
+        return res;
+    }
+    public List<Integer> birthday(List<Integer> nums, List<List<Integer>> questions) {
+        List<Integer> res = new ArrayList<>();
+        for (List<Integer> q : questions) {
+            int start = q.get(0);
+            int end = q.get(1);
+            int d = q.get(2);
+            res.add(getNumOfSubarray(nums, start, end, d));
         }
-
-        List<int[]> mouse = new ArrayList<>();
-        for (int[] m : mouseSessions) {
-            if (m[0] < catMax && m[1] > catMin) {
-                mouse.add(m);
-            }
-        }
-
-        // sort
-        Collections.sort(cat, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[0] == o2[0]) return o1[1] - o2[1];
-                return o1[0] - o2[0];
-            }
-        });
-
-        Collections.sort(mouse, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[0] == o2[0]) return o1[1] - o2[1];
-                return o1[0] - o2[0];
-            }
-        });
-
-        // binary Search
-
+        return res;
     }
 }
