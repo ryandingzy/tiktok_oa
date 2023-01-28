@@ -42,23 +42,38 @@ public class Test {
 //        System.out.println(s23.minSum(arr3, M));
 
         // birthday
-        List<Integer> nums = new ArrayList<>();
-        List<List<Integer>> questions = new ArrayList<>();
+//        List<Integer> nums = new ArrayList<>();
+//        List<List<Integer>> questions = new ArrayList<>();
+//        Scanner sc = new Scanner(System.in);
+//        int n = sc.nextInt();
+//        for (int i = 0; i < n; i++) {
+//            nums.add(sc.nextInt());
+//        }
+//        int m = sc.nextInt();
+//        n = sc.nextInt();
+//        for (int i = 0; i < m; i++) {
+//            List<Integer> lst = new ArrayList<>();
+//            for (int j = 0; j < n; j++) {
+//                lst.add(sc.nextInt());
+//            }
+//            questions.add(lst);
+//        }
+//        printList(s23.birthday(nums, questions));
+
+        // Minimum Resistance
+        List<List<Integer>> lsts = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         for (int i = 0; i < n; i++) {
-            nums.add(sc.nextInt());
-        }
-        int m = sc.nextInt();
-        n = sc.nextInt();
-        for (int i = 0; i < m; i++) {
             List<Integer> lst = new ArrayList<>();
             for (int j = 0; j < n; j++) {
                 lst.add(sc.nextInt());
             }
-            questions.add(lst);
+            lsts.add(lst);
         }
-        printList(s23.birthday(nums, questions));
+        System.out.println(s23.minResist(lsts));
+
+        sc.close();
 
     }
 

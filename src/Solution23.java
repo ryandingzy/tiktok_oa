@@ -153,4 +153,27 @@ public class Solution23 {
         }
         return res;
     }
+
+    // Minimum Resistance
+    public int minResist(List<List<Integer>> matrix) {
+        int n = matrix.size();
+        int[] minSum = new int[n];
+        for (int i = 0; i < n; i++) {
+            minSum[i] = matrix.get(i).get(n-1);
+        }
+        for (int j = n - 2; j >= 0; j--) {
+            int[] newArr = new int[n];
+            newArr[0] = Math.min(minSum[0], minSum[1]) + matrix.get(0).get(j);
+            newArr[n-1] = Math.min(minSum[n-1], minSum[n-2]) + matrix.get(n-1).get(j);
+            for (int i = 1; i < n - 1; i++) {
+                newArr[i] = Math.min(Math.min(minSum[i-1], minSum[i]), minSum[i+1]) + matrix.get(i).get(j);
+            }
+            minSum = newArr;
+        }
+        int res = minSum[0];
+        for (int i = 1; i < n; i++) {
+            res = Math.min(minSum[i], res);
+        }
+        return res;
+    }
 }
